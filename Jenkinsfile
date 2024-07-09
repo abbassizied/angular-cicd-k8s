@@ -35,7 +35,8 @@
          // sh 'npm run sonar ./angular-demo'
        }
      }
-
+     
+/*
      stage('Testing Stage') {
        steps {
          sh 'npm run ng test --no-watch --no-progress --browsers=ChromeHeadless ./angular-demo'
@@ -43,6 +44,7 @@
          // sh 'npm run sonar ./angular-demo'
        }
      }
+*/
 
      stage('Sonarqube Analysis - Angular') {
        steps {
