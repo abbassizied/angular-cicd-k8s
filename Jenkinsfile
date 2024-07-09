@@ -38,7 +38,7 @@
 
      stage('Testing Stage') {
        steps {
-         sh 'ng test --no-watch --no-progress --browsers=ChromeHeadless ./angular-demo'
+         sh 'npm run ng test --no-watch --no-progress --browsers=ChromeHeadless ./angular-demo'
          // sh 'npm run sonar-scanner ./angular-demo'
          // sh 'npm run sonar ./angular-demo'
        }
