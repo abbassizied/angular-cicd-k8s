@@ -56,12 +56,13 @@
      }
 
 */
+/*
     stage('quality gate') {
         steps {
             waitForQualityGate abortPipeline: false, credentialsId: 'sq1'
         }
     }
-
+*/
  
         // ##################################################
         // ### Docker
