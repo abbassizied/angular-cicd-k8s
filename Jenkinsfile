@@ -32,7 +32,7 @@
      stage('Build') {
        steps {
          sh 'npm install ./angular-demo'
-         sh 'npm run sonar ./angular-demo'
+         // sh 'npm run sonar ./angular-demo'
        }
      }
 
@@ -40,7 +40,7 @@
      stage('Sonarqube Analysis - Angular') {
        steps {
          withSonarQubeEnv(installationName: 'sq1') {
-           sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar'
+           sh 'npm run sonar ./angular-demo'
          }
        }
      }
