@@ -31,8 +31,8 @@
 
      stage('Build') {
        steps {
-         sh 'npm install'
-         sh 'npm run sonar'
+         sh 'npm install ./angular-demo'
+         sh 'npm run sonar ./angular-demo'
        }
      }
 
