@@ -36,11 +36,17 @@
        }
      }
 
+     stage('Testing Stage') {
+       steps {
+         sh 'npm test --no-watch --code-coverage'
+         // sh 'npm run sonar ./angular-demo'
+       }
+     }
 
      stage('Sonarqube Analysis - Angular') {
        steps {
          withSonarQubeEnv(installationName: 'sq1') {
-           sh 'npm sonar ./angular-demo'
+           sh 'sonar-scanner ./angular-demo'
          }
        }
      }
