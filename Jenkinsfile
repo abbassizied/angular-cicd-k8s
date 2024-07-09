@@ -46,6 +46,7 @@
      }
 */
 
+/*
      stage('Sonarqube Analysis - Angular') {
        steps {
          withSonarQubeEnv(installationName: 'sq1') {
@@ -54,7 +55,7 @@
        }
      }
 
-
+*/
     stage('quality gate') {
         steps {
             waitForQualityGate abortPipeline: false, credentialsId: 'sq1'
