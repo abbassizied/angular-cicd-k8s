@@ -49,7 +49,7 @@
      stage('Sonarqube Analysis - Angular') {
        steps {
          withSonarQubeEnv(installationName: 'sq1') {
-           sh 'npm run sonar-scanner ./angular-demo'
+           sh 'npx sonarqube-scanner ./angular-demo'
          }
        }
      }
