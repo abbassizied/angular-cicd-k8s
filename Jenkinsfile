@@ -70,7 +70,7 @@
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ${IMG_NAME} .'
+                sh 'docker build -t ${IMG_NAME} ./angular-demo'
                 sh 'docker tag ${IMG_NAME} ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}:${BUILD_NUMBER}'
                 echo 'Docker image built successfully!'
             }
