@@ -38,10 +38,10 @@ sonar.testExecutionReportPaths=reports/sonarqube_report.xml
 - 
 - 
 ```sh
-
+$ npm install -D sonarqube-scanner
 ``` 
 - 
-- You can run sonarqube using the command ```npm run sonar-scanner -- -Dsonar.login=${SONARQUBE_REPORTER_TOKEN}```
+- You can run sonarqube using the command ```npm run sonar-scanner```
 - 
 - 
 - 
