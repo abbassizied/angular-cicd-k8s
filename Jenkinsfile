@@ -38,7 +38,7 @@
 
      stage('Testing Stage') {
        steps {
-         sh 'ng test --no-watch --code-coverage'
+         sh 'ng test --no-watch --code-coverage ./angular-demo'
          // sh 'npm run sonar ./angular-demo'
        }
      }
