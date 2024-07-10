@@ -48,7 +48,7 @@ $ npm install -D sonarqube-scanner
 
 ## Start a Minikube cluster
 
-- Start minikube using ```$ minikube start --driver=hyperv --memory=4000m``` or ```$ minikube start --driver=docker``` 
+- Start minikube using ```$ minikube start --driver=hyperv --cpus=4 --memory=4000m``` or ```$ minikube start --driver=docker``` 
 - To check the status of the cluster ```$ minikube status```
 - To check that kubectl is properly configured: ```$ kubectl cluster-info```
 - Next, we need to run another command to enable Ingress addon: ```$ minikube addons enable ingress```

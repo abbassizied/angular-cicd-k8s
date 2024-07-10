@@ -1,8 +1,7 @@
  pipeline {
    agent any
    
-    environment {
-        IMAGE_TAG = "${BUILD_NUMBER}"
+    environment { 
         IMG_NAME = "angulardemo"
         // getting stored credentials
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_cred')
@@ -71,7 +70,7 @@
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${IMG_NAME} ./angular-demo'
-                sh 'docker tag ${IMG_NAME} ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}:${BUILD_NUMBER}'
+                sh 'docker tag ${IMG_NAME} ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}'
                 echo 'Docker image built successfully!'
             }
         }
@@ -82,7 +81,7 @@
                 echo 'Logon in to docker hub'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
                 echo 'Login Successfull'
-                sh 'docker push ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}:${BUILD_NUMBER}'
+                sh 'docker push ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}'
                 echo 'Docker pushed successfully!'
                 sh 'docker logout' 
             }
