@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "angular_chart.fullname" . }}
+  name: {{ include "angular.fullname" . }}
   labels:
-    {{- include "angular_chart.labels" . | nindent 4 }}
+    {{- include "angular.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "angular_chart.selectorLabels" . | nindent 4 }}
+    {{- include "angular.selectorLabels" . | nindent 4 }}
