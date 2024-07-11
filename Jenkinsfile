@@ -27,14 +27,14 @@
        }
      }
 
-
+/*
      stage('Build') {
        steps {
          sh 'npm install ./angular-demo'
          // sh 'npm run sonar ./angular-demo'
        }
      }
-
+/*
 /*
      stage('Testing Stage') {
        steps {
@@ -66,7 +66,7 @@
         // ##################################################
         // ### Docker
         // ##################################################	    
-
+/*
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${IMG_NAME} ./angular-demo'
@@ -86,12 +86,18 @@
                 sh 'docker logout' 
             }
         }
-
+*/
     // ##################################################################################################  
+
+     stage('test k8s commands') {
+       steps {
+         sh 'kubectl cluster-info' 
+       }
+     }
 
      stage('Deploy Angular container to minikube') {
        steps {
-         sh 'helm ' 
+         //sh 'helm ' 
        }
      }
 
