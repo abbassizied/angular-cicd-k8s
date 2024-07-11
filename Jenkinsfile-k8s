@@ -3,7 +3,7 @@
    
     environment { 
         // getting stored credentials
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub_cred')
+        KUBECONFIG = credentials('my_kubernetes') 
     } 
    
    tools {
@@ -28,11 +28,17 @@
 
     // ##################################################################################################  
 
-     stage('test k8s commands') {
-       steps {
-         sh 'kubectl cluster-info' 
-       }
-     }
+    stage('test k8s commands') {
+        steps {
+            script {
+                withCredentials([
+                    file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')
+                ]) {
+                    sh 'kubectl cluster-info'
+                }
+            }
+        }         
+    }
 
     // ##################################################################################################  
      stage('What\'s next?') {
