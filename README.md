@@ -146,6 +146,25 @@ $ minikube addons enable ingress
 $ minikube addons open dashboard --url
 ``` 
 
+## Configure Jenkins with Minikube:
 
+- Install the Kubernetes plugin in Jenkins:
+	- Go to Jenkins dashboard.
+	- Click on “Manage Jenkins” > “Manage Plugins”.
+	- Search for “Kubernetes” and install the plugin.
+	- Click on the **Available plugins** tab and search for **SSH Agent**.
+	- Click on the checkbox beside the SSH Agent plugin > Install button.
+	- 
+	- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+```sh
 
+``` 
 
