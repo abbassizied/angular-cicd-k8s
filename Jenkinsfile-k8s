@@ -1,0 +1,44 @@
+ pipeline {
+   agent any
+   
+    environment { 
+        // getting stored credentials
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub_cred')
+    } 
+   
+   tools {
+     maven 'maven397'
+     nodejs "nodejs2241"	 
+   }
+   
+   stages {
+
+   
+     stage('SCM') {
+       steps {
+         // git branch: 'main', url: 'https://github.com/abbassizied/angular-cicd-k8s.git'
+         checkout scmGit(branches: [
+           [name: '*/main']
+         ], extensions: [], userRemoteConfigs: [
+           [url: 'https://github.com/abbassizied/angular-cicd-k8s']
+         ])
+         echo 'Git Checkout Completed'
+       }
+     }
+
+    // ##################################################################################################  
+
+     stage('test k8s commands') {
+       steps {
+         sh 'kubectl cluster-info' 
+       }
+     }
+
+    // ##################################################################################################  
+     stage('What\'s next?') {
+       steps {
+         echo 'What\'s next?'
+       }
+     }
+   }
+ }
