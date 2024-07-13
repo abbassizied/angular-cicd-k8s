@@ -1,11 +1,13 @@
  pipeline {
    agent any
    
+  /*
     environment { 
         // getting stored credentials
         KUBECONFIG = credentials('kube_config') 
     } 
-   
+  */
+
    tools {
      maven 'maven397'
      nodejs "nodejs2241"	 
@@ -32,7 +34,7 @@
         steps {
             script {
                 withCredentials([
-                    file(credentialsId: 'kube_config', variable: 'KUBECONFIG')
+                    string(credentialsId: 'my_kubernetes', variable: 'api_token')
                 ]) {
                     sh 'helm upgrade --install angularchart ./helm/angularchart'
                 }
