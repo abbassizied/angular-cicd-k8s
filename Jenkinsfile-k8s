@@ -34,7 +34,7 @@
                 withCredentials([
                     file(credentialsId: 'kube_config', variable: 'KUBECONFIG')
                 ]) {
-                    sh 'kubectl cluster-info'
+                    sh 'helm upgrade --install angularchart ./helm/angularchart'
                 }
             }
         }         
