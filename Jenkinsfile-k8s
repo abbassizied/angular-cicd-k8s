@@ -36,7 +36,8 @@
                 withCredentials([
                     string(credentialsId: 'my_kubernetes', variable: 'api_token')
                 ]) {
-                    sh 'helm --token $api_token --server https://172.28.121.189:8443 --insecure-skip-tls-verify=true upgrade --install angularchart ./helm/angularchart'
+                  //  sh 'helm --token $api_token --server https://172.28.121.189:8443 --insecure-skip-tls-verify=true upgrade --install angularchart ./helm/angularchart'
+                   sh 'kubectl cluster-info'
                 }
             }
         }         
