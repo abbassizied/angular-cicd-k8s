@@ -165,6 +165,8 @@ $ minikube addons open dashboard --url
 - 
 - 
 ```sh
-
+$ cat C:/Users/Zied/.minikube/ca.crt | base64 -w 0; echo
+$ cat C:/Users/Zied/.minikube/profiles/minikube/client.crt | base64 -w 0; echo 
+$ cat C:/Users/Zied/.minikube/profiles/minikube/client.key | base64 -w 0; echo
 ``` 
 

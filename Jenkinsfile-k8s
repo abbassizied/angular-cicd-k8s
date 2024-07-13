@@ -3,7 +3,7 @@
    
     environment { 
         // getting stored credentials
-        KUBECONFIG = credentials('my_kubernetes') 
+        KUBECONFIG = credentials('kube_config') 
     } 
    
    tools {
@@ -32,7 +32,7 @@
         steps {
             script {
                 withCredentials([
-                    file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')
+                    file(credentialsId: 'kube_config', variable: 'KUBECONFIG')
                 ]) {
                     sh 'kubectl cluster-info'
                 }
