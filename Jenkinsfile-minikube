@@ -19,10 +19,12 @@
     // ##################################################################################################  
 
     stage('test k8s commands') {
-        steps {
-            script {
-              sh 'kubectl cluster-info' 
-            }
+        steps { 
+            kubeconfig(credentialsId: 'minikube-jenkins-secret', serverUrl: 'https://172.28.115.209:8443') {
+              script {
+                sh 'kubectl cluster-info' 
+              }
+            } 
         }         
     }
 
