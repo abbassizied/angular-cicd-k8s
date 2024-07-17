@@ -22,7 +22,8 @@
         steps { 
             withKubeConfig(caCertificate: '', clusterName: 'minikube', contextName: 'minikube', credentialsId: 'minikube-jenkins-secret', restrictKubeConfigAccess: false, serverUrl: 'https://172.28.115.209:8443') {
               script {
-                sh 'kubectl cluster-info' 
+                bat "kubectl get ns"
+                bat "helm ls"
               }
             } 
         }         
