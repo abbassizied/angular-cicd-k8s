@@ -34,7 +34,9 @@ volumes: [
 */    
     stage('Run helm') {
       container('helm') {
-        sh 'helm upgrade --install angularchart ./helm/angularchart'
+        sh 'ls -l'
+        sh 'cd helm'
+        sh 'helm upgrade --install angular angularchart'
       }
     }
   }
