@@ -18,6 +18,7 @@ volumes: [
     }
 */
      stage('SCM') {
+      container('helm') {
        steps {
          // git branch: 'main', url: 'https://github.com/abbassizied/angular-cicd-k8s.git'
          checkout scmGit(branches: [
@@ -27,6 +28,7 @@ volumes: [
          ])
          echo 'Git Checkout Completed'
        }
+      }
      }
 
 /*
