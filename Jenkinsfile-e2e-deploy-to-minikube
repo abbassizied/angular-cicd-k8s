@@ -41,7 +41,7 @@ volumes: [
 
     stage('Run helm') {
       container('helm') {
-        sh 'helm upgrade --install angular ./helm/angularchart'
+        sh 'helm upgrade --install angular -n jenkins ./helm/angularchart'
       }
     }
   }
