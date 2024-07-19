@@ -1,0 +1,44 @@
+# 
+
+
+## Create a persistent volume
+
+---
+kubectl apply -f jenkins-volume.yaml
+---
+minikube ssh
+sudo mkdir -p /data/jenkins-volume/
+sudo chown -R 1000:1000 /data/jenkins-volume/
+---
+
+## Create a service account
+
+kubectl create namespace jenkins
+kubectl apply -f jenkins-sa.yaml
+
+## Install Jenkins
+
+helm install jenkins -n jenkins -f jenkins-values.yaml jenkinsci/jenkins
+### Get your 'admin' user password by running:
+kubectl get secret -n jenkins jenkins -o jsonpath="{.data.jenkins-admin-password}"
+// cW9RRTIyUmVlcTM2eUJLU2c5MGtTaQ==
+echo $(echo cW9RRTIyUmVlcTM2eUJLU2c5MGtTaQ== | base64 --decode)
+// qoQE22Reeq36yBKSg90kSi
+
+### Get the Jenkins URL to visit by running these commands in the same shell:
+jsonpath="{.spec.ports[0].nodePort}"
+NODE_PORT=$(kubectl get -n jenkins -o jsonpath=$jsonpath services jenkins)
+jsonpath="{.items[0].status.addresses[0].address}"
+NODE_IP=$(kubectl get nodes -n jenkins -o jsonpath=$jsonpath)
+echo http://$NODE_IP:$NODE_PORT/login
+// http://172.28.115.209:/login
+---
+- Get the name of the Pod running that is running Jenkins using the following command:
+kubectl get pods -n jenkins
+- Use the kubectl command to set up port forwarding:
+ # kubectl -n jenkins port-forward <pod_name> 8080:8080
+ $ kubectl -n jenkins port-forward jenkins-0 8080:8080
+// http://127.0.0.1:8080/login?from=%2F 
+---
+
+  

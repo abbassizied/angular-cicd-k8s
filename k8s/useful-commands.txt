@@ -1,0 +1,17 @@
+minikube start --driver=docker
+//------------------------------------------------
+kubectl create namespace jenkins
+kubectl create sa jenkins -n jenkins
+kubectl create token jenkins -n jenkins --duration=8760h
+kubectl create rolebinding jenkins-admin-binding --clusterrole=admin --serviceaccount=jenkins:jenkins --namespace=jenkins
+//------------------------------------------------
+kubectl get serviceaccounts --namespace default
+kubectl delete serviceaccount my-service-account --namespace default
+kubectl get rolebindings --namespace default
+kubectl delete rolebinding my-rolebinding --namespace default
+//------------------------------------------------
+kubectl get pvc --namespace default
+kubectl delete pvc my-pvc --namespace default
+kubectl get pv --namespace default
+kubectl delete pv my-pv --namespace default
+//------------------------------------------------
