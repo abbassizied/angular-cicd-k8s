@@ -16,11 +16,20 @@ volumes: [
           echo "Test"
       }
     }
-    stage('Build') {
-      script{
-          echo "Build"
-      }
-    }
+*/
+     stage('SCM') {
+       steps {
+         // git branch: 'main', url: 'https://github.com/abbassizied/angular-cicd-k8s.git'
+         checkout scmGit(branches: [
+           [name: '*/main']
+         ], extensions: [], userRemoteConfigs: [
+           [url: 'https://github.com/abbassizied/angular-cicd-k8s']
+         ])
+         echo 'Git Checkout Completed'
+       }
+     }
+
+/*
     stage('Create Docker images') {
       container('docker') {
           sh "docker ps"
@@ -34,7 +43,7 @@ volumes: [
 */    
     stage('Run helm') {
       container('helm') {
-        sh 'helm upgrade --install angularchart ./helm/angularchart/'
+        sh 'helm upgrade --install -n jenkins angularchart ./helm/angularchart'
       }
     }
   }
