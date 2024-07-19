@@ -19,20 +19,12 @@ volumes: [
       }
     }
     */
-    
-    stage('SCM') { 
-      agent helm 
-        steps {
-          // Uncomment and configure the following line if using the 'git' command instead of 'checkout scmGit'
-          // git branch: 'main', url: 'https://github.com/abbassizied/angular-cicd-k8s.git'
-          checkout scmGit(branches: [
-            [name: '*/main']
-          ], extensions: [], userRemoteConfigs: [
-            [url: 'https://github.com/abbassizied/angular-cicd-k8s']
-          ])
-          echo 'Git Checkout Completed'
-        } 
-    }
+
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
+
+        checkout scm
+    }  
 
     /*
     stage('Create Docker images') {
