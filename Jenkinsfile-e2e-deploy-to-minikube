@@ -20,8 +20,8 @@ volumes: [
     }
     */
     
-    stage('SCM') {
-      container('helm') {
+    stage('SCM') { 
+      agent helm 
         steps {
           // Uncomment and configure the following line if using the 'git' command instead of 'checkout scmGit'
           // git branch: 'main', url: 'https://github.com/abbassizied/angular-cicd-k8s.git'
@@ -31,8 +31,7 @@ volumes: [
             [url: 'https://github.com/abbassizied/angular-cicd-k8s']
           ])
           echo 'Git Checkout Completed'
-        }
-      }
+        } 
     }
 
     /*
