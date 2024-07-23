@@ -4,25 +4,34 @@
 */
 
 pipeline {
-
     agent {
         kubernetes {
-            yamlFile 'KubernetesPod.yaml'
+            yamlFile 'KubernetesPod.yaml'  // Load Pod configuration from a YAML file
         }
     }
 
     stages { 
-
-        stage('test k8s commands') {
-            git url: 'https://github.com/abbassizied/angular-cicd-k8s.git', branch: 'main'
-            container('cicd-toolbox') {
-                    // echo POD_CONTAINER // displays 'busybox'
-                    // sh 'hostname'                   
-                    sh 'helm upgrade --install angular -n jenkins ./helm/angularchart'
-                    // Uncomment the following line to check the Node.js version
-                    // sh 'node --version'
+        stage('Checkout Code') {
+            steps {
+                // Checkout code from GitHub repository
+                git url: 'https://github.com/abbassizied/angular-cicd-k8s.git', branch: 'main'
             }
         }
-        
+
+        stage('Test k8s commands') {
+            steps {
+                container('cicd-toolbox') {
+                    // Execute Helm upgrade/install command
+                    sh 'helm upgrade --install angular -n jenkins ./helm/angularchart'
+                    
+                    // Uncomment the following lines if needed for debugging
+                    // Display the container's hostname
+                    // sh 'hostname'
+                    
+                    // Check the Node.js version
+                    // sh 'node --version'
+                }
+            }
+        }
     }
 }
