@@ -3,9 +3,9 @@ pipeline {
 		docker { image 'ziedab/jenkins-cicd-toolbox' }
     }
     stages {
-        stage('Build') {
+        stage('test k8s commands') {
             steps {
-                sh 'mvn -B'
+                sh 'kubectl cluster-info'
 				// sh 'node --version'
             }
         }
