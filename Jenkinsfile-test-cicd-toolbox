@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+
+        stage('Create Docker images') {
+            container('cicd-toolbox') {
+                // List Docker containers running
+                sh 'docker ps'
+            }
+        }
+
         stage('Test k8s commands') {
             steps {
                 container('cicd-toolbox') {
