@@ -1,0 +1,13 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  labels:
+    app: jenkins-agent
+    role: cicd-toolbox
+spec:
+  containers:
+    - name: cicd-toolbox
+      image: ziedab/jenkins-cicd-toolbox
+      command:
+        - cat
+      tty: true
