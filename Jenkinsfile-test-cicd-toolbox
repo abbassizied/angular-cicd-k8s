@@ -27,8 +27,8 @@ spec:
         stage('test k8s commands') {
             steps {
                 container('cicd-toolbox') {
-         echo POD_CONTAINER // displays 'busybox'
-        sh 'hostname'                   
+                    // echo POD_CONTAINER // displays 'busybox'
+                    // sh 'hostname'                   
                     sh 'kubectl cluster-info'
                     // Uncomment the following line to check the Node.js version
                     // sh 'node --version'
