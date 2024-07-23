@@ -4,28 +4,25 @@
 */
 
 pipeline {
+
     agent {
         kubernetes {
             yamlFile 'KubernetesPod.yaml'
         }
     }
-    stages {
 
-        stage('Clone repository') {
-            /* Let's make sure we have the repository cloned to our workspace */
-            checkout scm
-        }  
+    stages { 
 
         stage('test k8s commands') {
-            steps {
-                container('cicd-toolbox') {
+            git url: 'https://github.com/abbassizied/angular-cicd-k8s.git', branch: 'main'
+            container('cicd-toolbox') {
                     // echo POD_CONTAINER // displays 'busybox'
                     // sh 'hostname'                   
                     sh 'helm upgrade --install angular -n jenkins ./helm/angularchart'
                     // Uncomment the following line to check the Node.js version
                     // sh 'node --version'
-                }
             }
         }
+        
     }
 }
