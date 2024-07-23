@@ -26,10 +26,9 @@ pipeline {
                     
                     // Uncomment the following lines if needed for debugging
                     // Display the container's hostname
-                    // sh 'hostname'
-                    
-                    // Check the Node.js version
-                    // sh 'node --version'
+                    // sh 'hostname' 
+                    // echo POD_CONTAINER                     
+                    // sh 'kubectl cluster-info'                    
                 }
             }
         }

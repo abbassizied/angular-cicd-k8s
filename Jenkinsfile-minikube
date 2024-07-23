@@ -1,39 +1,50 @@
- pipeline {
-   agent any
+def label = "worker-${UUID.randomUUID().toString()}"
 
-   stages {
+podTemplate(
+    label: label,
+    containers: [
+        containerTemplate(
+            name: 'cicd-toolbox',
+            image: 'ziedab/jenkins-cicd-toolbox',
+            command: 'cat',
+            ttyEnabled: true
+        )
+    ]
+) {
+    node(label) {
+        def myRepo = "test"
+        
+        stage('Run shell') {
+            script {
+                // Execute a shell command to print 'hello world'
+                sh 'echo hello world'
+            }
+        }
 
-   
-     stage('SCM') {
-       steps {
-         // git branch: 'main', url: 'https://github.com/abbassizied/angular-cicd-k8s.git'
-         checkout scmGit(branches: [
-           [name: '*/main']
-         ], extensions: [], userRemoteConfigs: [
-           [url: 'https://github.com/abbassizied/angular-cicd-k8s']
-         ])
-         echo 'Git Checkout Completed'
-       }
-     }
+        stage('Clone repository') {
+            // Ensure we have the repository cloned to our workspace
+            checkout scm
+        }
 
-    // ##################################################################################################  
+        stage('Create Docker images') {
+            container('cicd-toolbox') {
+                // List Docker containers running
+                sh 'docker ps'
+            }
+        }
 
-    stage('test k8s commands') {
-        steps { 
-            withKubeConfig(caCertificate: '', clusterName: 'minikube', contextName: 'minikube', credentialsId: 'minikube-jenkins-secret', restrictKubeConfigAccess: false, serverUrl: 'https://172.28.115.209:8443') {
-              script {
-                bat "kubectl get ns"
-                bat "helm ls"
-              }
-            } 
-        }         
+        stage('Run kubectl') {
+            container('cicd-toolbox') {
+                // Get the list of pods in the Kubernetes cluster
+                sh 'kubectl get pods'
+            }
+        }
+
+        stage('Run helm') {
+            container('cicd-toolbox') {
+                // Upgrade or install the Helm chart
+                sh 'helm upgrade --install angular -n jenkins ./helm/angularchart'
+            }
+        }
     }
-
-    // ##################################################################################################  
-     stage('What\'s next?') {
-       steps {
-         echo 'What\'s next?'
-       }
-     }
-   }
- }
+}
