@@ -1,0 +1,82 @@
+/*  
+  Requires the Kubernetes plugin to be installed in Jenkins 
+  and Jenkins itself to be running within a Kubernetes cluster.
+*/
+
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile 'KubernetesPod.yaml'  // Load Pod configuration from a YAML file
+        }
+    }
+
+    environment { 
+        IMG_NAME = "angulardemo"
+        // getting stored credentials
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub_cred')
+    } 
+   
+   tools {
+     // maven 'maven398'
+     nodejs "nodejs2251"	 
+   }
+
+
+    stages { 
+        stage('Checkout Code') {
+            steps {
+                // Checkout code from GitHub repository
+                git url: 'https://github.com/abbassizied/angular-cicd-k8s.git', branch: 'main'
+            }
+        }
+        // ##################################################
+        // ### Test NodeJs
+        // ##################################################
+
+        stage('Test npm on Angular app') { 
+            steps {
+                sh 'npm install ./angular-demo'
+            }
+        }
+
+        // ##################################################
+        // ### Docker
+        // ##################################################	 
+
+        stage('Build Docker Image') { 
+            steps {
+                container('cicd-toolbox') {
+                    sh 'docker build -t ${IMG_NAME} ./angular-demo'
+                    sh 'docker tag ${IMG_NAME} ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}'
+                    echo 'Docker image built successfully!'                  
+                }
+            }
+        }
+
+        stage('Push Image') { 
+            steps {
+                container('cicd-toolbox') {
+                    echo 'Logon in to docker hub'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
+                    echo 'Login Successfull'
+                    sh 'docker push ${DOCKERHUB_CREDENTIALS_USR}/${IMG_NAME}'
+                    echo 'Docker pushed successfully!'
+                    sh 'docker logout'                    
+                }
+            }
+        }
+
+        // ##################################################
+        // ### k8s
+        // ##################################################	
+
+        stage('Deploy to minikube using helm') {
+            steps {
+                container('cicd-toolbox') {
+                    // Execute Helm upgrade/install command
+                    sh 'helm upgrade --install angular -n jenkins ./helm/angularchart'                   
+                }
+            }
+        }
+    }
+}
